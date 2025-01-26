@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DIRS=$(echo U*/)
+DIRS=$(echo 0*/)
 
 ##### Header
 echo "<!DOCTYPE html>
@@ -14,7 +14,7 @@ echo "<!DOCTYPE html>
 <body> 
 <div id="content">
 <header id="title-block-header">
-<h1>Server-side Web Development - IES Jaume II El Just - 2024-25</h1>
+<h1>Introducció a la programació amb Godot - IES Jaume II El Just - 2024-25</h1>
 </header>
 <main>
 " > index.html
