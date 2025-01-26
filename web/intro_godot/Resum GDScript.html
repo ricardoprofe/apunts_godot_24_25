@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ca" xml:lang="ca" >
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />     <meta name="author" content="Ricardo Sánchez" />        <title>Introducció a GDScript</title>
+    <style>
+        code{white-space: pre-wrap;}
+        span.smallcaps{font-variant: small-caps;}
+        div.columns{display: flex; gap: min(4vw, 1.5em);}
+        div.column{flex: auto; overflow-x: auto;}
+        div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+        /* The extra [class] is a hack that increases specificity enough to
+           override a similar rule in reveal.js */
+        ul.task-list[class]{list-style: none;}
+        ul.task-list li input[type="checkbox"] {
+          font-size: inherit;
+          width: 0.8em;
+          margin: 0 0.8em 0.2em -1.6em;
+          vertical-align: middle;
+        }
+        .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+        /* CSS for syntax highlighting */
+        pre > code.sourceCode { white-space: pre; position: relative; }
+        pre > code.sourceCode > span { line-height: 1.25; }
+        pre > code.sourceCode > span:empty { height: 1.2em; }
+        .sourceCode { overflow: visible; }
+        code.sourceCode > span { color: inherit; text-decoration: inherit; }
+        div.sourceCode { margin: 1em 0; }
+        pre.sourceCode { margin: 0; }
+        @media screen {
+        div.sourceCode { overflow: auto; }
+        }
+        @media print {
+        pre > code.sourceCode { white-space: pre-wrap; }
+        pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+        }
+        pre.numberSource code
+          { counter-reset: source-line 0; }
+        pre.numberSource code > span
+          { position: relative; left: -4em; counter-increment: source-line; }
+        pre.numberSource code > span > a:first-child::before
+          { content: counter(source-line);
+            position: relative; left: -1em; text-align: right; vertical-align: baseline;
+            border: none; display: inline-block;
+            -webkit-touch-callout: none; -webkit-user-select: none;
+            -khtml-user-select: none; -moz-user-select: none;
+            -ms-user-select: none; user-select: none;
+            padding: 0 4px; width: 4em;
+            color: #aaaaaa;
+          }
+        pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+        div.sourceCode
+          {  background-color: #f8f8f8; }
+        @media screen {
+        pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+        }
+        code span.al { color: #ef2929; } /* Alert */
+        code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+        code span.at { color: #204a87; } /* Attribute */
+        code span.bn { color: #0000cf; } /* BaseN */
+        code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+        code span.ch { color: #4e9a06; } /* Char */
+        code span.cn { color: #8f5902; } /* Constant */
+        code span.co { color: #8f5902; font-style: italic; } /* Comment */
+        code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+        code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+        code span.dt { color: #204a87; } /* DataType */
+        code span.dv { color: #0000cf; } /* DecVal */
+        code span.er { color: #a40000; font-weight: bold; } /* Error */
+        code span.ex { } /* Extension */
+        code span.fl { color: #0000cf; } /* Float */
+        code span.fu { color: #204a87; font-weight: bold; } /* Function */
+        code span.im { } /* Import */
+        code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+        code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+        code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+        code span.ot { color: #8f5902; } /* Other */
+        code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+        code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+        code span.ss { color: #4e9a06; } /* SpecialString */
+        code span.st { color: #4e9a06; } /* String */
+        code span.va { color: #000000; } /* Variable */
+        code span.vs { color: #4e9a06; } /* VerbatimString */
+        code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+    </style>
+        <link rel="stylesheet" href="../web_template/aqua.css" />  
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+      
+</head>
+
+<body>
+    <div id="content">
+                 <header id="title-block-header">
+            <h1 class="title">Introducció a GDScript</h1>
+            <!---->
+            <!--         <p class="author">Ricardo Sánchez</p>
+         -->
+                    </header>
+                 <nav id="TOC" role="doc-toc">
+            <div class="navContainer">
+                 <ul>
+<li><a href="#introducció-a-gdscript"
+id="toc-introducció-a-gdscript"><span
+class="toc-section-number">1</span> Introducció a GDScript</a>
+<ul>
+<li><a href="#el-primer-script" id="toc-el-primer-script"><span
+class="toc-section-number">1.1</span> El primer script</a></li>
+<li><a href="#comentaris" id="toc-comentaris"><span
+class="toc-section-number">1.2</span> Comentaris</a></li>
+<li><a href="#variables" id="toc-variables"><span
+class="toc-section-number">1.3</span> Variables</a></li>
+<li><a href="#operadors" id="toc-operadors"><span
+class="toc-section-number">1.4</span> Operadors</a></li>
+<li><a href="#constants" id="toc-constants"><span
+class="toc-section-number">1.5</span> Constants</a></li>
+<li><a href="#funcions" id="toc-funcions"><span
+class="toc-section-number">1.6</span> Funcions</a>
+<ul>
+<li><a href="#funcions-del-sistema" id="toc-funcions-del-sistema"><span
+class="toc-section-number">1.6.1</span> Funcions del sistema</a></li>
+</ul></li>
+<li><a href="#control-de-flux" id="toc-control-de-flux"><span
+class="toc-section-number">1.7</span> Control de flux</a>
+<ul>
+<li><a href="#operadors-condicionals"
+id="toc-operadors-condicionals"><span
+class="toc-section-number">1.7.1</span> Operadors condicionals</a></li>
+<li><a href="#ifelse" id="toc-ifelse"><span
+class="toc-section-number">1.7.2</span> if/else</a></li>
+</ul></li>
+</ul></li>
+</ul>
+            </div>
+        </nav>
+                <main>
+            <h1 data-number="1" id="introducció-a-gdscript"><span
+            class="header-section-number">1</span> Introducció a
+            GDScript</h1>
+            <p><strong>GDScript</strong> és un llenguatge de programació
+            d’alt nivell, orientat a objectes, imperatiu i gradualment
+            tipat creat per <strong>Godot</strong>. Utilitza una
+            <strong>sintaxi basada en sagnat</strong> similar a
+            llenguatges com <strong>Python</strong>. El seu objectiu és
+            optimitzar i integrar-se estretament amb <strong>Godot
+            Engine</strong>, permetent una gran flexibilitat per a la
+            creació i integració de contingut.</p>
+            <p><a
+            href="https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/gdscript_basics.html">Documentació
+            oficial</a></p>
+            <h2 data-number="1.1" id="el-primer-script"><span
+            class="header-section-number">1.1</span> El primer
+            script</h2>
+            <p>Agafem l’script de <a
+            href="https://docs.godotengine.org/es/4.x/getting_started/step_by_step/scripting_first_script.html">Creating
+            your first script</a> de la documentació de Godot.</p>
+            <div class="sourceCode" id="cb1"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">extends</span> <span class="cn">S</span><span class="va">prite2D</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="va">var</span> <span class="va">speed</span> <span class="op">=</span> <span class="dv">400</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="va">var</span> <span class="va">angular_speed</span> <span class="op">=</span> <span class="cn">PI</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="va">func</span> _process<span class="op">(</span><span class="va">delta</span><span class="op">):</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="va">rotation</span> <span class="er">+=</span> <span class="va">angular_speed</span> <span class="op">*</span> <span class="va">delta</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="va">var</span> <span class="va">velocity</span> <span class="op">=</span> <span class="cn">V</span><span class="va">ector2</span><span class="op">.</span><span class="cn">UP</span><span class="op">.</span>rotated<span class="op">(</span><span class="va">rotation</span><span class="op">)</span> <span class="op">*</span> <span class="va">speed</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="va">position</span> <span class="er">+=</span> <span class="va">velocity</span> <span class="op">*</span> <span class="va">delta</span></span></code></pre></div>
+            <p>Aquest script està associat a un node
+            <strong>Sprite2D</strong>, per això la primera línia,
+            <code>extends Sprite2D</code>, el que fa és heretar les
+            <strong>funcions</strong> (mètodes) i
+            <strong>propietats</strong> (variables) de la classe
+            <strong>Sprite2D</strong>. Per exemple, les variables
+            <code>rotation</code> i <code>position</code> són propietats
+            de la classe, accessibles des del Inpector (panell
+            dret).</p>
+            <p>A continuació tenim 2 <strong>variables</strong>
+            definides amb la paraula clau <code>var</code>,
+            <code>speed</code> i <code>angular_speed</code>. De les
+            variables parlarem més endavant.</p>
+            <p>Per últim tenim la funció <code>_process</code>. Una
+            <strong>funció</strong> és un bloc de codi que té un nom i a
+            la qual es pot cridar, el que significa que es pot executar
+            el seu codi cada vegada que escrivim el seu nom. El codi de
+            les funcions den GDScript es troba niuat per sagnats. Al
+            nostre exemple, el codi són les línies:</p>
+            <div class="sourceCode" id="cb2"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>    <span class="va">rotation</span> <span class="er">+=</span> <span class="va">angular_speed</span> <span class="op">*</span> <span class="va">delta</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">var</span> <span class="va">velocity</span> <span class="op">=</span> <span class="cn">V</span><span class="va">ector2</span><span class="op">.</span><span class="cn">UP</span><span class="op">.</span>rotated<span class="op">(</span><span class="va">rotation</span><span class="op">)</span> <span class="op">*</span> <span class="va">speed</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">position</span> <span class="er">+=</span> <span class="va">velocity</span> <span class="op">*</span> <span class="va">delta</span></span></code></pre></div>
+            <p><code>_process</code> és una funció ja definida en el
+            sistema, el que significa que podem canviar el seu
+            contingut, però que té un significat especial. Aquesta en
+            concret s’executa cada <em>frame</em>, unes 60 voltes per
+            segon, el que permet fer moviments de personatges del joc,
+            efectes, lectura de tecles, etc.</p>
+            <p>La funció <code>_process</code> té un paràmetre,
+            <code>delta</code>, que és el temps que ha passat des de
+            l’últim frame. Aquest paràmetre és una variable que
+            normalment s’utilitza per a fer que els canvis en els
+            elements succeixen a la mateixa velocitat independentment
+            del <code>frame rate</code> (tasa de frames) o
+            <code>fps</code> (<em>frames per secon</em>). Al nostre codi
+            el multipliquem per <code>rotation</code> i
+            <code>position</code> per tal que la velocitat de rotació
+            siga homogènia.</p>
+            <h2 data-number="1.2" id="comentaris"><span
+            class="header-section-number">1.2</span> Comentaris</h2>
+            <p>Qualsevol cosa des d’un <code>#</code> fins al final de
+            la línia s’ignora i es considera un comentari.</p>
+            <div class="sourceCode" id="cb3"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">#</span> <span class="cn">A</span><span class="va">ix</span>ò é<span class="va">s</span> <span class="va">un</span> <span class="va">comentari</span> d<span class="st">&#39;una línia</span></span></code></pre></div>
+            <p>Els comentaris de vàries línies es poden crear utilitzant
+            <code>"""</code> (tres cometes seguides) al principi i al
+            final d’un bloc de text. Tingueu en compte que això crea una
+            cadena, per tant, no s’eliminarà quan es compile
+            l’script.</p>
+            <div class="sourceCode" id="cb4"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;&quot;&quot; Aquest és</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="er"> un comentari</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="er"> de vàries línies</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="er">&quot;&quot;&quot;</span></span></code></pre></div>
+            <h2 data-number="1.3" id="variables"><span
+            class="header-section-number">1.3</span> Variables</h2>
+            <p>Les <strong>variables</strong> són nom simbòlics que
+            contenen un valor. Per exemple:</p>
+            <div class="sourceCode" id="cb5"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="va">var</span> <span class="va">life</span> <span class="op">=</span> <span class="dv">100</span></span></code></pre></div>
+            <p>siginifica que estem creant (usant la paraula clau
+            <code>var</code>) una variable anomenada <em>life</em> amb
+            el valor <code>100</code>.</p>
+            <p>Les variables es poden llegir:</p>
+            <div class="sourceCode" id="cb6"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="va">var</span> <span class="va">life</span> <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span><span class="op">(</span><span class="va">life</span><span class="op">)</span></span></code></pre></div>
+            <p>imprimirà el valor <code>100</code>, que està
+            emmagatzemat en la variable <code>life</code>.</p>
+            <p>També podem modificar el contingut d’una variable una
+            vegada creada amb l’operador d’assignació (<code>=</code>).
+            Sempre es calcula el costat dret i s’assigna a la variable
+            del costat esquerre:</p>
+            <div class="sourceCode" id="cb7"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="va">var</span> <span class="va">life</span> <span class="op">=</span> <span class="dv">100</span> <span class="op">#</span> <span class="va">life</span> <span class="va">t</span>é <span class="va">el</span> <span class="va">valor</span> <span class="dv">100</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="va">life</span> <span class="op">=</span> <span class="dv">50</span> <span class="op">#</span> <span class="va">life</span> <span class="va">t</span>é <span class="va">el</span> <span class="va">valor</span> <span class="dv">50</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="va">var</span> <span class="va">damage</span> <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="va">life</span> <span class="op">=</span> <span class="va">life</span> <span class="op">-</span> <span class="va">damage</span> <span class="op">#</span> <span class="cn">A</span><span class="va">ra</span> <span class="va">life</span> <span class="va">t</span>é <span class="va">el</span> <span class="va">valor</span> <span class="dv">40</span> <span class="op">(</span><span class="dv">50</span> <span class="op">-</span> <span class="dv">10</span><span class="op">)</span></span></code></pre></div>
+            <p>Les variables tenen un tipus (<em>type</em>), que és el
+            tipus de dades que emmagatzemen. Els tipus bàsics de
+            GDScript són:</p>
+            <ul>
+            <li><strong><code>null</code></strong>: <code>null</code> és
+            un tipus de dades buit que no conté informació i no se li
+            pot assignar cap altre valor.</li>
+            <li><strong><code>bool</code></strong>: Abreviatura de
+            “booleà”, només pot valdre <code>true</code> o
+            <code>false</code>.</li>
+            <li><strong><code>int</code></strong>: Abreviatura de
+            “integer”, emmagatzema nombres enters (positius i
+            negatius).</li>
+            <li><strong><code>float</code></strong>: Emmagatzema nombres
+            reals, inclosos els decimals, que s’indiquen amb un punt
+            (<code>.</code>).</li>
+            <li><strong><code>String</code></strong>: Cadena de
+            caracters, entre cometes dobles (<code>"</code>).</li>
+            </ul>
+            <p>L’assignació de tipus es fa automàticament, depenent del
+            valor assignat. A més, si canvia el valor de la variable i
+            és d’un tipus diferent, també canvia el tipus de la
+            variable.</p>
+            <p>Exemples:</p>
+            <div class="sourceCode" id="cb8"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="va">var</span> <span class="va">a</span> <span class="op">=</span> <span class="kw">true</span><span class="op">;</span> <span class="op">#</span> <span class="va">bool</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="va">var</span> <span class="va">b</span> <span class="op">=</span> <span class="dv">5</span><span class="op">;</span> <span class="op">#</span> <span class="va">int</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="va">var</span> <span class="va">c</span> <span class="op">=</span> <span class="dv">4.5</span> <span class="op">#</span> <span class="va">float</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="va">var</span> <span class="va">message</span> <span class="op">=</span> <span class="st">&quot;Welcome&quot;</span> <span class="op">#</span> <span class="cn">S</span><span class="va">tring</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="va">message</span> <span class="op">=</span> <span class="dv">5</span> <span class="op">#</span> <span class="cn">A</span><span class="va">ra</span> <span class="va">message</span> é<span class="va">s</span> <span class="va">int</span></span></code></pre></div>
+            <h2 data-number="1.4" id="operadors"><span
+            class="header-section-number">1.4</span> Operadors</h2>
+            <p>El operadors matemàtics més freqüents són:</p>
+            <div class="sourceCode" id="cb9"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="va">x</span> <span class="op">+</span> <span class="va">y</span> <span class="op">#</span> <span class="va">suma</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="va">x</span> <span class="op">-</span> <span class="va">y</span> <span class="op">#</span> <span class="va">sustracci</span>ó</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="va">x</span> <span class="op">*</span> <span class="va">y</span> <span class="op">#</span> <span class="va">multiplicaci</span>ó</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="va">x</span> <span class="op">/</span> <span class="va">y</span> <span class="op">#</span><span class="va">divisi</span>ó</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="va">x</span> <span class="op">%</span> <span class="va">y</span> <span class="op">#</span> <span class="cn">M</span>ò<span class="va">dul</span><span class="op">,</span> <span class="va">el</span> <span class="va">resultat</span> é<span class="va">s</span> <span class="va">el</span> <span class="va">residu</span> <span class="va">de</span> <span class="va">la</span> <span class="va">divisi</span>ó <span class="va">entera</span> <span class="va">de</span> <span class="va">x</span> <span class="va">entre</span> <span class="va">y</span><span class="op">.</span> <span class="cn">E</span><span class="va">xemple</span><span class="op">:</span> <span class="dv">8</span> <span class="op">%</span> <span class="dv">3</span> <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="op">-</span><span class="va">x</span> <span class="op">#</span> <span class="va">negaci</span>ó</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="va">x</span> <span class="op">**</span> <span class="va">y</span> <span class="op">#</span> <span class="va">exponenciaci</span>ó<span class="op">,</span> <span class="va">x</span> <span class="va">elevat</span> <span class="va">a</span> <span class="va">y</span></span></code></pre></div>
+            <p>L’operador d’assignació = assigna a la variable de
+            l’esquerra el valor resultant de l’operació de la dreta.</p>
+            <div class="sourceCode" id="cb10"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="va">x</span> <span class="op">=</span> <span class="va">y</span> <span class="op">#</span> <span class="va">x</span> <span class="va">val</span> <span class="va">y</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="va">x</span> <span class="er">+=</span> <span class="va">y</span> <span class="op">#</span> <span class="va">x</span> <span class="op">=</span> <span class="va">x</span> <span class="op">+</span> <span class="va">y</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="va">x</span> <span class="er">-=</span> <span class="va">y</span> <span class="op">#</span> <span class="va">x</span> <span class="op">=</span> <span class="va">x</span> <span class="op">-</span> <span class="va">y</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="va">x</span> <span class="op">*=</span> <span class="va">y</span> <span class="op">#</span> <span class="va">x</span> <span class="op">=</span> <span class="va">x</span> <span class="op">*</span> <span class="va">y</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="va">x</span> <span class="op">/=</span> <span class="va">y</span> <span class="op">#</span> <span class="va">x</span> <span class="op">=</span> <span class="va">x</span> <span class="op">/</span> <span class="va">y</span></span></code></pre></div>
+            <h2 data-number="1.5" id="constants"><span
+            class="header-section-number">1.5</span> Constants</h2>
+            <p>Les constants són variables que no poden canviar quan
+            s’executa l’script. L’ús de la paraula clau
+            <code>const</code> permet donar un nom a un valor constant.
+            Si intenteu assignar un valor a una constant després de
+            declarar-la, us donarà un error.</p>
+            <p>Es recomana utilitzar constants sempre que un valor no
+            haja de canviar. Exemple:</p>
+            <div class="sourceCode" id="cb11"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="va">const</span> <span class="va">height</span> <span class="op">=</span> <span class="dv">200</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="va">func</span> _ready<span class="op">():</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">height</span> <span class="op">=</span> <span class="dv">300</span></span></code></pre></div>
+            <p>Aquest codi produeix l’error <em>“Cannot assign a new
+            value to a constant”</em>.</p>
+            <h2 data-number="1.6" id="funcions"><span
+            class="header-section-number">1.6</span> Funcions</h2>
+            <p>Una <strong>funció</strong> és un fragment de codi que
+            s’associa a un nom simbòlic i que pot ser executat en
+            qualsevol moment, escrivint el nom de la funció.</p>
+            <p>El cos de la funció es troba definit per una indentació
+            cap a la dreta.</p>
+            <p>Exemple:</p>
+            <div class="sourceCode" id="cb12"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="va">func</span> welcomeMessage<span class="op">():</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">var</span> <span class="va">message</span> <span class="op">=</span> <span class="st">&quot;Welcome&quot;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span><span class="op">(</span><span class="va">message</span><span class="op">)</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>welcomeMessage<span class="op">()</span> <span class="op">#</span> <span class="cn">I</span><span class="va">mprimeix</span> <span class="cn">W</span><span class="va">elcome</span></span></code></pre></div>
+            <p>En aquest exemple el nom de la funció és
+            <code>welcomeMessage</code>. Va seguit d’uns parèntesis
+            entre els quals escrivim els paràmetres (en cas cas no n’hi
+            ha). El cos de la funció són les 2 línies següents. Per
+            últim, la instrucció welcomeMessage() executa la funció
+            imprimint el misatge.</p>
+            <blockquote>
+            <p>Les funcions es diferencien de les variables fàcilment:
+            les funcions sempre tenen parèntesis al final del nom,
+            mentre que les variables no.</p>
+            </blockquote>
+            <p>Les funcions poden tindre 0, 1 o més
+            <strong>paràmetres</strong>, als quals podem passar valor
+            que s’utilitzaran dins de la funció:</p>
+            <div class="sourceCode" id="cb13"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="va">func</span> welcomeMessage<span class="op">(</span><span class="va">name</span><span class="op">):</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">var</span> <span class="va">message</span> <span class="op">=</span> <span class="st">&quot;Welcome&quot;</span> <span class="op">+</span> <span class="va">name</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span> <span class="va">message</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>welcomeMessage<span class="op">(</span><span class="st">&quot;Mary&quot;</span><span class="op">)</span> <span class="op">#</span> <span class="cn">I</span><span class="va">mprimeix</span> <span class="cn">W</span><span class="va">elcome</span> <span class="cn">M</span><span class="va">ary</span></span></code></pre></div>
+            <blockquote>
+            <p>En aquest exemple l’operador <code>+</code> concatena
+            (uneix) les 2 cadenes de text.</p>
+            </blockquote>
+            <p>Una altre exemple:</p>
+            <div class="sourceCode" id="cb14"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="va">func</span> addition<span class="op">(</span><span class="va">a</span><span class="op">,</span> <span class="va">b</span><span class="op">):</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">var</span> <span class="va">result</span> <span class="op">=</span> <span class="va">a</span> <span class="op">+</span> <span class="va">b</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">result</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>addition<span class="op">(</span><span class="dv">5</span><span class="op">,</span> <span class="dv">6</span><span class="op">)</span> <span class="op">#</span> <span class="cn">I</span><span class="va">mprimeix</span> <span class="dv">11</span></span></code></pre></div>
+            <p>La paraula clau <code>result</code> en una funció retorna
+            el valor especificat i termina l’execució de la funció. Si
+            una funció no té cap instrucció <code>result</code>, termina
+            al finalitzar i retorna <code>null</code>.</p>
+            <p>Quan necessitem definir una funció, però aquesta no té
+            cos, hem d’escriure la paraula clau <code>pass</code>:</p>
+            <div class="sourceCode" id="cb15"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="va">func</span> empty_function<span class="op">():</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">pass</span></span></code></pre></div>
+            <h3 data-number="1.6.1" id="funcions-del-sistema"><span
+            class="header-section-number">1.6.1</span> Funcions del
+            sistema</h3>
+            <p>Godot té algunes funcions definides, les qual podem
+            utilitzar als nostres scripts. El seu nom sol començar amb
+            <code>_</code>. Les més importants són:</p>
+            <ul>
+            <li><strong><code>_ready()</code></strong>: Es crida quan el
+            node està “a punt”, és a dir, quan tant el node com els seus
+            fills han entrat a l’arbre de l’escena. S’executa una vegada
+            al principi. Normalment s’utilitza per a initzialitzar
+            variables. Pertany a la classe Node.</li>
+            <li><strong><code>_init()</code></strong>: Es crida una
+            vegada quan l’script çomença a executar-se. S’executa abans
+            que <code>_ready()</code>. Pertany a la classe
+            <code>Object</code>.</li>
+            <li><strong><code>_process(delta)</code></strong>: Es crida
+            cada fotograma o <em>frame</em>. L’argument
+            <code>delta</code> és el temps transcorregut des de l’últim
+            frame (en segons). S’utilitza per a implementar el bucle del
+            joc en cada escena.</li>
+            <li><strong><code>_physics_process(delta)</code></strong>:
+            Es crida cada <em>frame</em> de processament de físiques.
+            Similar a <code>_process</code>, però s’utilitza en objectes
+            que tenen un comportament de físiques (gravetat, forces,
+            etc).</li>
+            </ul>
+            <figure>
+            <img src="images/godot_lifecycle.jpeg"
+            alt="Cicle de vida de Godot" />
+            <figcaption aria-hidden="true">Cicle de vida de
+            Godot</figcaption>
+            </figure>
+            <h2 data-number="1.7" id="control-de-flux"><span
+            class="header-section-number">1.7</span> Control de
+            flux</h2>
+            <h3 data-number="1.7.1" id="operadors-condicionals"><span
+            class="header-section-number">1.7.1</span> Operadors
+            condicionals</h3>
+            <p>Són operadors el resultat dels quals és <code>true</code>
+            o <code>false</code>:</p>
+            <div class="sourceCode" id="cb16"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="va">x</span> <span class="op">==</span> <span class="va">y</span> <span class="op">#</span> <span class="kw">true</span> <span class="va">si</span> <span class="va">x</span> <span class="va">i</span> <span class="va">y</span> <span class="va">s</span>ó<span class="va">n</span> <span class="va">iguals</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="va">x</span> <span class="er">!=</span> <span class="va">y</span> <span class="op">#</span> <span class="kw">true</span> <span class="va">si</span> <span class="va">x</span> <span class="va">i</span> <span class="va">y</span> <span class="va">s</span>ó<span class="va">n</span> <span class="va">diferents</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="va">x</span> <span class="op">&lt;</span> <span class="va">y</span> <span class="op">#</span> <span class="kw">true</span> <span class="va">si</span> <span class="va">x</span> é<span class="va">s</span> <span class="va">menor</span> <span class="va">que</span> <span class="va">y</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="va">x</span> <span class="op">&gt;</span> <span class="va">y</span> <span class="op">#</span> <span class="kw">true</span> <span class="va">si</span> <span class="va">x</span> é<span class="va">s</span> <span class="va">major</span> <span class="va">que</span> <span class="va">y</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="va">x</span> <span class="op">&lt;=</span> <span class="va">y</span> <span class="op">#</span> <span class="kw">true</span> <span class="va">si</span> <span class="va">x</span> é<span class="va">s</span> <span class="va">menor</span> <span class="va">o</span> <span class="va">igual</span> <span class="va">que</span> <span class="va">y</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="va">x</span> <span class="op">&gt;=</span> <span class="va">y</span> <span class="op">#</span> <span class="kw">true</span> <span class="va">si</span> <span class="va">x</span> é<span class="va">s</span> <span class="va">major</span> <span class="va">o</span> <span class="va">igual</span> <span class="va">que</span> <span class="va">y</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="kw">not</span> <span class="va">x</span> <span class="op">#</span> <span class="va">negaci</span>ó <span class="va">del</span> <span class="va">valor</span> <span class="va">de</span> <span class="va">x</span><span class="op">,</span> <span class="kw">true</span> <span class="va">o</span> <span class="kw">false</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>!<span class="va">x</span> <span class="op">#</span> <span class="va">el</span> <span class="va">mateix</span> <span class="va">que</span> <span class="kw">not</span> <span class="va">x</span></span></code></pre></div>
+            <p>Podem unir vàries condicions amb els operadors
+            <code>and</code> (<code>&amp;&amp;</code>) i <code>or</code>
+            (<code>||</code>).</p>
+            <div class="sourceCode" id="cb17"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="va">x</span> <span class="kw">and</span> <span class="va">y</span> <span class="op">#</span> <span class="kw">true</span> <span class="va">si</span> <span class="va">x</span> <span class="va">i</span> <span class="va">y</span> <span class="va">s</span>ó<span class="va">n</span> <span class="kw">true</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="va">x</span> <span class="op">&amp;&amp;</span> <span class="va">y</span> <span class="op">#</span> <span class="va">el</span> <span class="va">mateix</span> <span class="va">que</span> <span class="va">x</span> <span class="kw">and</span> <span class="va">y</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="va">x</span> <span class="kw">or</span> <span class="va">y</span> <span class="op">#</span> <span class="kw">true</span> <span class="va">si</span> <span class="va">qualsevol</span> <span class="va">dels</span> <span class="dv">2</span> <span class="va">valors</span> é<span class="va">s</span> <span class="kw">true</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="va">x</span> <span class="op">||</span> <span class="va">y</span> <span class="op">#</span> <span class="op">#</span> <span class="va">el</span> <span class="va">mateix</span> <span class="va">que</span> <span class="va">x</span> <span class="kw">or</span> <span class="va">y</span></span></code></pre></div>
+            <p>Exemples:</p>
+            <div class="sourceCode" id="cb18"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="va">var</span> <span class="va">a</span> <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="va">var</span> <span class="va">b</span> <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="va">var</span> <span class="va">c</span> <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="va">a</span> <span class="op">==</span> <span class="va">b</span> <span class="op">#</span> <span class="kw">false</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="va">a</span> <span class="er">!=</span> <span class="va">c</span> <span class="op">#</span> <span class="kw">true</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="va">a</span> <span class="op">==</span> <span class="va">b</span> <span class="op">+</span> <span class="va">c</span> <span class="op">#</span> <span class="kw">true</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="va">a</span> <span class="op">&lt;</span> <span class="va">b</span> <span class="op">#</span> <span class="kw">false</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="va">c</span> <span class="op">&gt;</span> <span class="va">b</span> <span class="op">#</span> <span class="kw">true</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="va">a</span> <span class="op">&lt;=</span> <span class="va">b</span> <span class="op">+</span><span class="va">c</span> <span class="op">#</span> <span class="kw">true</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>!<span class="op">(</span><span class="va">a</span> <span class="op">==</span> <span class="va">b</span><span class="op">)</span> <span class="op">#</span> <span class="kw">true</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="va">a</span> <span class="op">&gt;</span> <span class="va">b</span> <span class="kw">and</span> <span class="va">b</span> <span class="op">&lt;</span> <span class="va">c</span> <span class="op">#</span> <span class="kw">true</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="va">a</span> <span class="op">&gt;</span> <span class="va">b</span> <span class="op">&amp;&amp;</span> <span class="va">b</span> <span class="op">&gt;=</span> <span class="va">c</span> <span class="op">#</span> <span class="kw">false</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="va">a</span> <span class="op">&gt;</span> <span class="va">b</span> <span class="kw">or</span> <span class="va">b</span> <span class="op">&lt;</span> <span class="va">c</span> <span class="op">#</span> <span class="kw">true</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="va">a</span> <span class="op">&gt;</span> <span class="va">b</span> <span class="op">||</span> <span class="va">b</span> <span class="op">&gt;=</span> <span class="va">c</span> <span class="op">#</span> <span class="kw">true</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="va">a</span> <span class="op">&lt;</span> <span class="va">b</span> <span class="kw">or</span> <span class="va">b</span> <span class="op">&gt;=</span> <span class="va">c</span> <span class="op">#</span> <span class="kw">false</span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="kw">not</span> <span class="op">(</span><span class="va">a</span> <span class="op">&lt;</span> <span class="va">b</span> <span class="kw">or</span> <span class="va">b</span> <span class="op">&gt;=</span> <span class="va">c</span><span class="op">)</span> <span class="op">#</span> <span class="kw">true</span></span></code></pre></div>
+            <h3 data-number="1.7.2" id="ifelse"><span
+            class="header-section-number">1.7.2</span> if/else</h3>
+            <p>Les condicions simples es creen utilitzant la sintaxi
+            <code>if</code>/<code>else</code>.</p>
+            <p>La sintàxi més bàsica és:</p>
+            <div class="sourceCode" id="cb19"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">condici</span>ó<span class="op">:</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">bloc</span> <span class="va">de</span> <span class="va">codi</span></span></code></pre></div>
+            <p>En la condició s’utilitzen expressions com les vistes a
+            l’apartat anterior, el resultat de les quals ha de ser
+            <code>true</code> o <code>false</code>. Si el resultat és
+            <code>true</code>, s’executa el bloc de codi del
+            <code>if</code>. Si el resultat és <code>false</code>, no
+            s’executa res i continua el programa.</p>
+            <p>Exemple:</p>
+            <div class="sourceCode" id="cb20"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="va">var</span> <span class="va">a</span> <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="va">var</span> <span class="va">b</span> <span class="op">=</span> <span class="dv">6</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">a</span> <span class="op">&lt;</span> <span class="va">b</span><span class="op">:</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">print</span><span class="op">(</span><span class="st">&quot;a és menor que b&quot;</span><span class="op">)</span></span></code></pre></div>
+            <p>Podem usar la paraula clau <code>else</code> per a
+            especificar el codi que s’executaria en cas que la condició
+            siga <code>false</code>:</p>
+            <div class="sourceCode" id="cb21"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">condici</span>ó<span class="op">:</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">bloc</span> <span class="va">de</span> <span class="va">codi</span> <span class="cn">A</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span><span class="op">:</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">bloc</span> <span class="va">de</span> <span class="va">codi</span> <span class="cn">B</span></span></code></pre></div>
+            <p>Exemple:</p>
+            <div class="sourceCode" id="cb22"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="va">var</span> <span class="va">a</span> <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="va">var</span> <span class="va">b</span> <span class="op">=</span> <span class="dv">6</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">a</span> <span class="op">&lt;</span> <span class="va">b</span><span class="op">:</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">print</span><span class="op">(</span><span class="st">&quot;a és menor que b&quot;</span><span class="op">)</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span><span class="op">:</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>   <span class="fu">print</span><span class="op">(</span><span class="st">&quot;a és major o igual que b&quot;</span><span class="op">)</span></span></code></pre></div>
+        </main>
+        
+
+        <!--- Modal images -->
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+            <!-- The Close Button -->
+            <!--span class="close">&times;</span-->
+
+            <!-- Modal Content (The Image) -->
+            <img class="modal-content" id="img01">
+
+            <!-- Modal Caption (Image Text) -->
+            <div id="caption"></div>
+        </div>
+
+        <!-- End Modal Images -->
+
+        <!-- Snackbar for copy code -->
+        <div id="snackbar">Codi copiat!</div>
+        <!-- End Snackbar -->
+
+        <script>
+            function ModalizeImages() {
+                // Script basat en https://www.w3schools.com/howto/howto_css_modal_images.asp
+                // PEr ampliar imatges en fer click
+
+                // Get the modal
+                var modal = document.getElementById("myModal");
+
+                var modalImg = document.getElementById("img01");
+                var captionText = document.getElementById("caption");
+
+                // Get the image and insert it inside the modal - use its "alt" text as a caption
+                //var img = document.getElementById("myImg");
+                document.querySelectorAll("img").forEach((img => {
+                        img.onclick = function() {
+                            modal.style.display = "block";
+                            modalImg.src = this.src;
+                            captionText.innerHTML = this.alt;
+                        }
+                    }))
+                    // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close")[0];
+
+                // When the user clicks on <span> (x), close the modal
+                //span.onclick = function() {
+                myModal.onclick = function() {
+                    modal.style.display = "none";
+                }
+
+
+            }
+
+
+            function markItem(id) {
+                // Restaurem format de tots
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                        //item.style.fontWeight = "300";
+                        item.classList.remove("navItemSelected");
+                    })
+                    //item.style.color = "#ff0000";
+
+                // Afegim format
+                let items = document.querySelectorAll("#TOC a[href='#" + id + "']");
+                items.forEach(function(item) {
+                    //item.style.fontWeight = "bolder";
+                    item.classList.add("navItemSelected");
+                })
+
+            }
+
+            var observer = new IntersectionObserver(function(entries) {
+                // isIntersecting is true when element and viewport are overlapping
+                // isIntersecting is false when element and viewport don't overlap
+                if (entries[0].isIntersecting === true) {
+                    let id = entries[0].target.id;
+                    markItem(id);
+                }
+
+            }, {
+                threshold: [0]
+            });
+
+            window.addEventListener("load", function() {
+                document.querySelectorAll("h1, h2, h3").forEach(function(item) {
+                    observer.observe(item);
+                });
+
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                    item.addEventListener("click", function(item) {
+                        markItem(item.id);
+                    })
+                })
+
+                // Fem modals totes les imatges
+                ModalizeImages();
+            })
+
+            document.querySelector("#TOC").addEventListener("click", function(event) {
+                let toc = event.target
+                if (toc.offsetWidth > 10) {
+                    toc.classList.add("minimizedToc");
+                }
+            })
+
+            document.querySelector("#TOC").addEventListener("mouseover", function(event) {
+                let toc = event.target
+                if (toc.classList.contains("minimizedToc"))
+                    toc.classList.remove("minimizedToc");
+            })
+
+
+                        
+            /* PER COPIAR CODI */
+
+
+            // Busca tots els elements amb la classe "sourceCode"
+            var sourceCodeElements = document.querySelectorAll('div.sourceCode');
+
+            /*Afegim el botó a tots els divs */
+            // Afegir un botó per a cada element "sourceCode"
+            sourceCodeElements.forEach(function(element) {
+                console.log(element.id);
+                var button = document.createElement('div');
+                button.className = 'button-copy';
+
+                // Afegir una icona al botó (fa servir FontAwesome com a exemple)
+                //var icon = document.createElement('i');
+                //icon.className = 'fas fa-copy'; // Utilitza l'ícona "copy" de FontAwesome
+
+                // Obté l'ID de l'element actual
+                var elementId = element.id;
+
+                // Afegeix un event listener al botó per cridar la funció amb l'ID
+                button.addEventListener('click', function() {
+                    copyContent(elementId);
+                });
+
+                // Afegeix l'icona al botó i el botó just dins de l'element "sourceCode"
+                //button.appendChild(icon);
+                element.appendChild(button);
+            });
+
+
+
+            // Funció per copiar el contingut d'un element amb l'ID donat
+            function copyContent(elementId) {
+                var element = document.getElementById(elementId);
+                var textToCopy = element.innerText;
+
+                // Crea un element de text i copia el contingut
+                var textArea = document.createElement('textarea');
+                textArea.value = textToCopy;
+                document.body.appendChild(textArea);
+
+                // Selecciona i copia el text
+                textArea.select();
+                document.execCommand('copy');
+
+                // Elimina l'element de text afegit temporalment
+                document.body.removeChild(textArea);
+
+                // Notifica a l'usuari que el codi s'ha copiat
+                mostraSnackbar();
+            }
+
+            /* SNACKBAR EN COPIAR CODI */
+
+            function mostraSnackbar() {
+            // Busquem l'snackbar
+            var x = document.getElementById("snackbar");
+
+            // Li afegim la classe show
+            x.className = "show";
+
+            // I als tres segons la llevem
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+            } 
+
+
+
+
+        </script>
+    </div>
+</body>
+
+</html>
