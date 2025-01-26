@@ -24,22 +24,22 @@ fi
 
 cur_dir=${PWD##*/}
 cur_dir=${cur_dir// /_}
-[ ! -d ../web/$cur_dir ] && mkdir ../web/$cur_dir
+[ ! -d ../docs/$cur_dir ] && mkdir ../docs/$cur_dir
 
-[ -d images ] && cp -r images ../web/$cur_dir
+[ -d images ] && cp -r images ../docs/$cur_dir
 
-[ -d ../web/web_template ] && rm -r ../web/web_template
-[ -d ../web_template ] && cp -r ../web_template ../web/
+[ -d ../docs/web_template ] && rm -r ../docs/web_template
+[ -d ../web_template ] && cp -r ../web_template ../docs/
 
 echo "Creant pdf..."
 echo $FILENAME
 pandoc "$FILENAME" -o "${BASENAME}.pdf" --template=../template/eisvogel.tex -N --highlight-style espresso
-cp "${BASENAME}.pdf" ../web/$cur_dir/
+cp "${BASENAME}.pdf" ../docs/$cur_dir/
 
 echo "Creant html..."
 echo ${1}
 pandoc "${1}" -o "${BASENAME}.html" --toc -s --number-sections --highlight-style tango --template ../web_template/plantilla.html --css ../web_template/aqua.css --syntax-definition=../web_template/dart.xml
-mv "${BASENAME}.html" ../web/$cur_dir/
+mv "${BASENAME}.html" ../docs/$cur_dir/
 
 ERROR=$?;
 if [ ${ERROR} -eq 0 ]; then
