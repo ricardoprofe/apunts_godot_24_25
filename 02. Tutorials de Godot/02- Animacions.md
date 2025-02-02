@@ -112,12 +112,12 @@ Una vegada creada s'ha d'executar en lloc de la de *idle* quan estiga en movimen
 
 ```lua
 if !isCrouched and is_on_floor():
-		velocity.x = direction * speed
-	
-		if velocity.x != 0:
-			$AnimationPlayer.play("walking")
-		else:
-			$AnimationPlayer.play("idle")
+	velocity.x = direction * speed
+
+	if velocity.x != 0:
+		$AnimationPlayer.play("walking")
+	else:
+		$AnimationPlayer.play("idle")
 ```
 
 ## Exercicis
