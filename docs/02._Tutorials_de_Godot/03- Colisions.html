@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ca" xml:lang="ca" >
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />     <meta name="author" content="Ricardo Sánchez" />        <title>Godot. Col·lisions</title>
+    <style>
+        code{white-space: pre-wrap;}
+        span.smallcaps{font-variant: small-caps;}
+        div.columns{display: flex; gap: min(4vw, 1.5em);}
+        div.column{flex: auto; overflow-x: auto;}
+        div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+        /* The extra [class] is a hack that increases specificity enough to
+           override a similar rule in reveal.js */
+        ul.task-list[class]{list-style: none;}
+        ul.task-list li input[type="checkbox"] {
+          font-size: inherit;
+          width: 0.8em;
+          margin: 0 0.8em 0.2em -1.6em;
+          vertical-align: middle;
+        }
+        .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+        /* CSS for syntax highlighting */
+        pre > code.sourceCode { white-space: pre; position: relative; }
+        pre > code.sourceCode > span { line-height: 1.25; }
+        pre > code.sourceCode > span:empty { height: 1.2em; }
+        .sourceCode { overflow: visible; }
+        code.sourceCode > span { color: inherit; text-decoration: inherit; }
+        div.sourceCode { margin: 1em 0; }
+        pre.sourceCode { margin: 0; }
+        @media screen {
+        div.sourceCode { overflow: auto; }
+        }
+        @media print {
+        pre > code.sourceCode { white-space: pre-wrap; }
+        pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+        }
+        pre.numberSource code
+          { counter-reset: source-line 0; }
+        pre.numberSource code > span
+          { position: relative; left: -4em; counter-increment: source-line; }
+        pre.numberSource code > span > a:first-child::before
+          { content: counter(source-line);
+            position: relative; left: -1em; text-align: right; vertical-align: baseline;
+            border: none; display: inline-block;
+            -webkit-touch-callout: none; -webkit-user-select: none;
+            -khtml-user-select: none; -moz-user-select: none;
+            -ms-user-select: none; user-select: none;
+            padding: 0 4px; width: 4em;
+            color: #aaaaaa;
+          }
+        pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+        div.sourceCode
+          {  background-color: #f8f8f8; }
+        @media screen {
+        pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+        }
+        code span.al { color: #ef2929; } /* Alert */
+        code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+        code span.at { color: #204a87; } /* Attribute */
+        code span.bn { color: #0000cf; } /* BaseN */
+        code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+        code span.ch { color: #4e9a06; } /* Char */
+        code span.cn { color: #8f5902; } /* Constant */
+        code span.co { color: #8f5902; font-style: italic; } /* Comment */
+        code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+        code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+        code span.dt { color: #204a87; } /* DataType */
+        code span.dv { color: #0000cf; } /* DecVal */
+        code span.er { color: #a40000; font-weight: bold; } /* Error */
+        code span.ex { } /* Extension */
+        code span.fl { color: #0000cf; } /* Float */
+        code span.fu { color: #204a87; font-weight: bold; } /* Function */
+        code span.im { } /* Import */
+        code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+        code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+        code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+        code span.ot { color: #8f5902; } /* Other */
+        code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+        code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+        code span.ss { color: #4e9a06; } /* SpecialString */
+        code span.st { color: #4e9a06; } /* String */
+        code span.va { color: #000000; } /* Variable */
+        code span.vs { color: #4e9a06; } /* VerbatimString */
+        code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+    </style>
+        <link rel="stylesheet" href="../web_template/aqua.css" />  
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+      
+</head>
+
+<body>
+    <div id="content">
+                 <header id="title-block-header">
+            <h1 class="title">Godot. Col·lisions</h1>
+            <!---->
+            <!--         <p class="author">Ricardo Sánchez</p>
+         -->
+                    </header>
+                 <nav id="TOC" role="doc-toc">
+            <div class="navContainer">
+                 <ul>
+<li><a href="#collisions-amb-godot" id="toc-collisions-amb-godot"><span
+class="toc-section-number">1</span> Col·lisions amb Godot</a>
+<ul>
+<li><a href="#comportament-de-lobjecte"
+id="toc-comportament-de-lobjecte"><span
+class="toc-section-number">1.1</span> comportament de l’objecte</a></li>
+<li><a href="#collisions-amb-el-personatge"
+id="toc-collisions-amb-el-personatge"><span
+class="toc-section-number">1.2</span> Col·lisions amb el
+personatge</a></li>
+<li><a href="#collisions-amb-el-puny"
+id="toc-collisions-amb-el-puny"><span
+class="toc-section-number">1.3</span> Col·lisions amb el puny</a></li>
+<li><a href="#exercicis" id="toc-exercicis"><span
+class="toc-section-number">1.4</span> Exercicis</a></li>
+</ul></li>
+</ul>
+            </div>
+        </nav>
+                <main>
+            <h1 data-number="1" id="collisions-amb-godot"><span
+            class="header-section-number">1</span> Col·lisions amb
+            Godot</h1>
+            <p>En aquest tutorial utilitzarem col·lisions per a detectar
+            quan un objecte entre en l’espai d’un altre objecte.</p>
+            <p>Afegirem a la nostra escena <strong>Main</strong> un
+            objecte (en el nostre cas una taronja) que serà llançada
+            contra el nostre personatge, el qual podrà destruir-la amb
+            colps de puny. Si la taronja impacta contra el personatge,
+            perdrà punts de vida.</p>
+            <h2 data-number="1.1" id="comportament-de-lobjecte"><span
+            class="header-section-number">1.1</span> comportament de
+            l’objecte</h2>
+            <p>Primer, creem una escena nova per a la taronja que
+            llançarem, la qual serà de tipus
+            <strong>StaticBody2D</strong> (li canviem el nom per
+            <strong><em>Orange</em></strong>), el qual tindrà dins un
+            <strong>Sprite2D</strong> i un
+            <strong>CollisionShape2D</strong>, aquest últim amb forma
+            <strong>CircleShape2D</strong>:</p>
+            <figure>
+            <img src="images/orange_scene.png" alt="Escena Orange" />
+            <figcaption aria-hidden="true">Escena Orange</figcaption>
+            </figure>
+            <p>Arrossega l’sprite <em>taronja.png</em> a l’espai
+            <strong>Texture</strong> del Sprite2D i ajusta la forma de
+            la <strong>CollisionShape2D</strong> a la del sprite:</p>
+            <figure>
+            <img src="images/orange_scene2.png"
+            alt="La nostra taronja amb el collision shape" />
+            <figcaption aria-hidden="true">La nostra taronja amb el
+            collision shape</figcaption>
+            </figure>
+            <p>La taronja entrarà en escena des de la dreta, així que
+            arrossega l’escena <em>Orange.tscn</em> dins de l’escena
+            <em>Main</em>, però fora del seu extrem dret.</p>
+            <p>Per a que la taronja es moga cap a l’esquerra, hem de
+            crear un script:</p>
+            <div class="sourceCode" id="cb1"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">extends</span> <span class="cn">S</span><span class="va">taticBody2D</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>@<span class="va">export</span> <span class="va">var</span> <span class="va">rotationVel</span> <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>@<span class="va">export</span> <span class="va">var</span> <span class="va">vel</span> <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="va">func</span> _ready<span class="op">():</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">pass</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="va">func</span> _process<span class="op">(</span><span class="va">delta</span><span class="op">):</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    rotate<span class="op">(-</span><span class="cn">PI</span> <span class="op">*</span> <span class="va">delta</span> <span class="op">*</span> <span class="va">rotationVel</span><span class="op">)</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="va">position</span><span class="op">.</span><span class="va">x</span> <span class="er">-=</span> <span class="va">vel</span> <span class="op">+</span> <span class="va">delta</span></span></code></pre></div>
+            <p>En aquest script hem definit una velocitat de rotació i
+            una velocitat de desplaçament, les quals usem en la funció
+            <code>_process</code> per a que rote
+            (<code>rotate(-PI * delta * rotationVel)</code>) i es
+            desplace cap a l’esquerra
+            (<code>position.x -= vel + delta</code>).</p>
+            <p>Si executem l’escena principal, la taronja s’hauria de
+            desplaçar cap a l’esquerra fins a eixir de la pantalla. Com
+            volem que torne a aparèixer per la dreta, hem de detectar
+            quan passe d’una certa coordenada <strong>x</strong> i
+            canviar eixa coordenada <strong>x</strong> per una fora del
+            límit dret. A més, volem que la posició vertical siga
+            aleatòria, però dins de 3 possibles posicions: a l’altura
+            del puny amb el personatge alçat, a l’altura del puny amb el
+            personatge ajupit i a l’altura dels peus (per a que tinga
+            que saltar el personatge).</p>
+            <p>Aquesta aleatorietat l’aconseguim amb un
+            <strong><em>array</em></strong>, que és una llista ordenada
+            de variables. Cada element de l’array contindrà una
+            coordenada <strong>y</strong>:</p>
+            <div class="sourceCode" id="cb2"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>@<span class="va">export</span> <span class="va">var</span> <span class="va">positions</span> <span class="op">=</span> <span class="op">[</span><span class="dv">290</span><span class="op">,</span> <span class="dv">350</span><span class="op">,</span> <span class="dv">400</span><span class="op">]</span></span></code></pre></div>
+            <p>Per a accedir a cada element de l’array, hem d’indicar la
+            seua posició (<em>índex</em>), sent la primera el 0, després
+            el 1 i per últim el 2. Aixì, un array amb 10 elements
+            tindria els índexs del 0 al 9.</p>
+            <div class="sourceCode" id="cb3"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">#</span> <span class="cn">E</span><span class="va">xemple</span> d<span class="st">&#39;accés al primer element de l&#39;</span><span class="va">array</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span><span class="op">(</span><span class="va">positions</span><span class="op">[</span><span class="dv">0</span><span class="op">])</span></span></code></pre></div>
+            <p>Com nosaltres volem que cada posició siga aleatòria,
+            utilitzarem una funció per a generar un nombre enter entre 0
+            i 2. Modifiquem la nostra funció <code>_ready</code> per a
+            que començe en una d’aquestes 3 coordenades:</p>
+            <div class="sourceCode" id="cb4"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="va">func</span> _ready<span class="op">():</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">position</span><span class="op">.</span><span class="va">y</span> <span class="op">=</span> <span class="va">positions</span><span class="op">[</span>randi_range<span class="op">(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">2</span><span class="op">)]</span></span></code></pre></div>
+            <blockquote>
+            <p>La funció del sistema <code>randi_range(from, to)</code>
+            genera un nombre enter entre <code>from</code> i
+            <code>to</code>, ambdós inclosos.</p>
+            </blockquote>
+            <p>També creem una funció, anomenada <code>respawn()</code>,
+            que establirà les noves coordenades de la taronja:</p>
+            <div class="sourceCode" id="cb5"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="va">func</span> respawn<span class="op">():</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">position</span><span class="op">.</span><span class="va">x</span> <span class="op">=</span> <span class="cn">D</span><span class="va">isplayServer</span><span class="op">.</span>screen_get_size<span class="op">().</span><span class="va">x</span> <span class="op">+</span> <span class="dv">50</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">position</span><span class="op">.</span><span class="va">y</span> <span class="op">=</span> <span class="va">positions</span><span class="op">[</span>randi_range<span class="op">(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">2</span><span class="op">)]</span></span></code></pre></div>
+            <blockquote>
+            <p><code>DisplayServer.screen_get_size()</code> retorna les
+            mides de la pantalla del nostre joc.</p>
+            </blockquote>
+            <p>I cridem a la nostra funció <code>respawn()</code> dins
+            de <code>_process</code>, quan passe de certa coordenada
+            <strong>x</strong>:</p>
+            <div class="sourceCode" id="cb6"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="va">func</span> _process<span class="op">(</span><span class="va">delta</span><span class="op">):</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    rotate<span class="op">(-</span><span class="cn">PI</span> <span class="op">*</span> <span class="va">delta</span> <span class="op">*</span> <span class="va">rotationVel</span><span class="op">)</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">position</span><span class="op">.</span><span class="va">x</span> <span class="er">-=</span> <span class="va">vel</span> <span class="op">+</span> <span class="va">delta</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="va">position</span><span class="op">.</span><span class="va">x</span> <span class="op">&lt;</span> <span class="op">-</span><span class="dv">50</span><span class="op">:</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        respawn<span class="op">()</span></span></code></pre></div>
+            <p>Ara a l’executar el nostre joc, quan la taronja ix per
+            l’esquerra, hauria de tornar a aparèixer per la dreta.</p>
+            <h2 data-number="1.2"
+            id="collisions-amb-el-personatge"><span
+            class="header-section-number">1.2</span> Col·lisions amb el
+            personatge</h2>
+            <p>En el nostre tutorial anem a crear 2 esdeveniments de
+            col·lisió:</p>
+            <ul>
+            <li>Quan la taronja entre en contacte amb el cos del
+            personatge, es produirà una col·lisió que farà que aquest
+            perda vida i la taronja desaparega.</li>
+            <li>Quan el personatge li pegue un colp de puny a la
+            taronja, aquesta desapareixerà.</li>
+            </ul>
+            <p>Per a crear aquest comportament, hem de crear en l’escena
+            <strong>Player</strong> un nou node de tipus
+            <strong>Area2D</strong> amb el seu corresponent
+            <strong>CollisionShape2D</strong> per al <em>collider</em>
+            del cos, també un altre Area2D per al collider del puny. Els
+            reanomenem com en la imatge:</p>
+            <figure>
+            <img src="images/colliders.png" alt="Colliders de Player" />
+            <figcaption aria-hidden="true">Colliders de
+            Player</figcaption>
+            </figure>
+            <p>Creem les formes dels <em>CollisionShape2D</em> de forma
+            rectangular i les ajustem com en la imatge (nota: ajusta el
+            nou <em>collider</em> del cos per a que siga un poc més
+            ample que el <em>collider</em> existent, utilitzat per a que
+            el personatge tinga col·lisions físiques):</p>
+            <figure>
+            <img src="images/colliders2.png"
+            alt="Colliders de Player" />
+            <figcaption aria-hidden="true">Colliders de
+            Player</figcaption>
+            </figure>
+            <p>Pots canviar els colors dels colliders per a
+            diferenciar-los.</p>
+            <p>Per a detectar la taronja, hem de introduir-la en un
+            grup: selecciona l’escena <strong>Orange</strong> i, en el
+            panell dret, pestanya <em>Node -&gt; Groups</em>, crea un
+            nou grup anomenat <strong>Orange</strong>:</p>
+            <figure>
+            <img src="images/groups1.png" alt="Creació de grups" />
+            <figcaption aria-hidden="true">Creació de grups</figcaption>
+            </figure>
+            <p>Al crear el nou grup, marquem l’opció
+            <strong><em>Global</em></strong>:</p>
+            <figure>
+            <img src="images/groups2.png"
+            alt="Creació de grups, global" />
+            <figcaption aria-hidden="true">Creació de grups,
+            global</figcaption>
+            </figure>
+            <p>Ara selecciona el node principal de l’escena
+            <strong>Orange</strong> i marca el grup
+            <strong>Orange</strong> en el panell de grups.</p>
+            <p>Obrim l’script de orange per a afegir una nova funció per
+            a destruir la taronja quan col·lisione amb el personatge.
+            Aquesta funció té 2 instruccions:</p>
+            <ol type="1">
+            <li>Fa invisible la taronja</li>
+            <li>Crida a la funció <em>respawn</em>, que farà que la
+            taronja torne a aparèixer a la part dreta:</li>
+            </ol>
+            <div class="sourceCode" id="cb7"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="va">func</span> destroy<span class="op">():</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">visible</span> <span class="op">=</span> <span class="kw">false</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    respawn<span class="op">()</span></span></code></pre></div>
+            <p>També hem d’afegir una instrucció a <em>respawn</em> per
+            tal de que torne a ser visible:</p>
+            <div class="sourceCode" id="cb8"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="va">func</span> respawn<span class="op">():</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">visible</span> <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">position</span><span class="op">.</span><span class="va">x</span> <span class="op">=</span> <span class="cn">D</span><span class="va">isplayServer</span><span class="op">.</span>screen_get_size<span class="op">().</span><span class="va">x</span> <span class="op">+</span> <span class="dv">50</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">position</span><span class="op">.</span><span class="va">y</span> <span class="op">=</span> <span class="va">positions</span><span class="op">[</span>randi_range<span class="op">(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">2</span><span class="op">)]</span></span></code></pre></div>
+            <p>Tornem a l’escena <strong>Player</strong>, seleccionem el
+            node <strong>BodyArea2D</strong> i, al panell <em>Node -&gt;
+            Signals</em>, fem doble clic al senyal
+            <strong>body_entered(body: Node2D)</strong>:</p>
+            <figure>
+            <img src="images/signal1.png" alt="Creació de senyal" />
+            <figcaption aria-hidden="true">Creació de
+            senyal</figcaption>
+            </figure>
+            <p>Ens pregunta a quin script volem connectar el senyal,
+            elegim el node <strong>Player</strong>:</p>
+            <figure>
+            <img src="images/signal2.png"
+            alt="Connexió de senyal a script" />
+            <figcaption aria-hidden="true">Connexió de senyal a
+            script</figcaption>
+            </figure>
+            <blockquote>
+            <p>Els <strong>senyals</strong> (<em>signals</em>) són
+            missatges que emeten els nodes quan els passa alguna cosa
+            específica, com que es pressiona un botó o entren en un
+            àrea. Altres nodes poden connectar-se a aquest senyal i
+            cridar a una funció quan passe l’esdeveniment.</p>
+            </blockquote>
+            <p>Aquesta última acció ens haurà creat una nova funció al
+            nostre script anomenada ***_on_body_area_2d_body_entered***.
+            Borrem la instrucció <code>pass</code> i completem el seu
+            codi:</p>
+            <div class="sourceCode" id="cb9"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="va">func</span> _on_area_2d_body_entered<span class="op">(</span><span class="va">body</span><span class="op">:</span> <span class="cn">N</span><span class="va">ode2D</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">void</span><span class="op">:</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="va">body</span><span class="op">.</span>is_in_group<span class="op">(</span><span class="st">&quot;Orange&quot;</span><span class="op">):</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">body</span><span class="op">.</span>destroy<span class="op">()</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">life</span> <span class="er">-=</span> <span class="dv">10</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">print</span><span class="op">(</span><span class="st">&quot;Life: &quot;</span><span class="op">,</span> <span class="va">life</span><span class="op">)</span></span></code></pre></div>
+            <p>Aquest codi comprova que el paràmetre <code>body</code>
+            estiga en el grup <em>Orange</em>: si <code>body</code> és
+            la nostra taronja, entrarà en el <code>if</code> i cridarà a
+            la funció <code>destroy()</code> que hem creat en l’script
+            de la taronja. Després resta una quantitat de la variable
+            <code>life</code> i, per últim, executa les animacions
+            corresponents a si està en peu o ajupit (hauràs de crear
+            aquestes animacions si no les tens).</p>
+            <p>Per a que funcione aquest codi, hauràs de crear també una
+            variable gobal (a l’inici de l’script), <code>life</code>,
+            que serà el comptador de vida del nostre personatge:</p>
+            <div class="sourceCode" id="cb10"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>@<span class="va">export</span> <span class="va">var</span> <span class="va">life</span> <span class="op">=</span> <span class="dv">100</span></span></code></pre></div>
+            <p>Comprova que, cada vegada que la taronja colpeja el
+            personatje, aquest perd 10 punts de vida i la taronja
+            desapareix.</p>
+            <h2 data-number="1.3" id="collisions-amb-el-puny"><span
+            class="header-section-number">1.3</span> Col·lisions amb el
+            puny</h2>
+            <p>Ara anem a configurar el <em>collider</em> del puny. Anem
+            al node <strong>AnimationPlayer2D</strong> de l’escena
+            <strong>Player</strong> i obrim l’animació
+            <em>punch_stand</em>. La parem en el frame en el que està
+            amb el puny estés i ajustem la forma del <em>collider</em>
+            al puny:</p>
+            <figure>
+            <img src="images/punch_stand_collider.png"
+            alt="Puny collider" />
+            <figcaption aria-hidden="true">Puny collider</figcaption>
+            </figure>
+            <p>Apunta les coordenades <code>x</code> i <code>y</code>
+            del <em>collider</em>.</p>
+            <p>Ara afegim un script al node
+            <strong>PunchCollisionShape2D</strong> i l’editem per a que
+            quede així:</p>
+            <div class="sourceCode" id="cb11"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="va">extends</span> <span class="cn">C</span><span class="va">ollisionShape2D</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="op">#</span> <span class="cn">C</span><span class="va">alled</span> <span class="va">when</span> <span class="va">the</span> <span class="va">node</span> <span class="va">enters</span> <span class="va">the</span> <span class="va">scene</span> <span class="va">tree</span> <span class="cf">for</span> <span class="va">the</span> <span class="va">first</span> <span class="va">time</span><span class="op">.</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="va">func</span> _ready<span class="op">()</span> <span class="op">-&gt;</span> <span class="va">void</span><span class="op">:</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">disabled</span> <span class="op">=</span> <span class="kw">true</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="op">#</span> <span class="cn">H</span><span class="va">abilita</span> <span class="va">el</span> <span class="va">collider</span> <span class="va">en</span> <span class="va">les</span> <span class="va">posicions</span> <span class="va">x</span> <span class="va">i</span> <span class="va">y</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="va">func</span> enableCollider<span class="op">(</span><span class="va">x</span><span class="op">,</span> <span class="va">y</span><span class="op">):</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="va">position</span><span class="op">.</span><span class="va">x</span> <span class="op">=</span> <span class="va">x</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="va">position</span><span class="op">.</span><span class="va">y</span> <span class="op">=</span> <span class="va">y</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="va">disabled</span> <span class="op">=</span> <span class="kw">false</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="op">#</span> <span class="cn">D</span><span class="va">eshabilita</span> <span class="va">el</span> <span class="va">collider</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="va">func</span> disableCollider<span class="op">():</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="va">disabled</span> <span class="op">=</span> <span class="kw">true</span></span></code></pre></div>
+            <p>El que fem amb l’script és:</p>
+            <ul>
+            <li>Deshabilitem el <em>collider</em> a l’inici, en la
+            funció <code>_ready()</code>. Així no col·lisionarà amb la
+            taronja.</li>
+            <li>Creem una funció, <code>enableCollider(x, y)</code>, que
+            torna a habilitar el <em>collider</em> en les coordenades
+            <code>x</code> i <code>y</code>, passades com a arguments.
+            Cridarem a aquesta funció quan l’animació estiga en el
+            <em>frame</em> del colp de puny.</li>
+            <li>Creem una funció, <code>disableCollider()</code>, que
+            deshabilita el <em>collider</em>. Cridarem a aquesta funció
+            quan passe el <em>frame</em> de l’animació del colp de
+            puny.</li>
+            </ul>
+            <p>A continuació, hem de cridar a les funcions
+            <code>enableCollider</code> i <code>disableCollider</code>
+            des del <strong>Animator</strong>: en l’animació
+            <em>punch_stand</em>, afegeix un nou track: <em>Add track
+            -&gt; Call Method Track -&gt;
+            PunchCollisionShape2D</em>.</p>
+            <figure>
+            <img src="images/call_method1.png"
+            alt="Afegir Call Method Track" />
+            <figcaption aria-hidden="true">Afegir Call Method
+            Track</figcaption>
+            </figure>
+            <p>Afegim una key en el moment en que comença el
+            <em>frame</em> del puny i cridem a la funció
+            <code>enableCollider</code> amb les coordenades que has
+            apuntat anteriorment. Fem el mateix amb la funció
+            <code>disableCollider</code> en el moment en que termina el
+            colp de puny de l’animació:</p>
+            <figure>
+            <img src="images/call_method2.png"
+            alt="Cridada a funcions des de l’animació" />
+            <figcaption aria-hidden="true">Cridada a funcions des de
+            l’animació</figcaption>
+            </figure>
+            <p>L’últim pas consisteix en enviar un senyal quan la
+            taronja entre en el <em>collider</em> i tractar-la en
+            l’script. Seleccionem <strong>PunchArea2D</strong> i en
+            <em>Node -&gt; Signals</em> afegim un nou senyal associat a
+            l’script de <strong>PunchCollisionShape2D</strong>:</p>
+            <figure>
+            <img src="images/signal3.png" alt="Senyal de PunchArea2D" />
+            <figcaption aria-hidden="true">Senyal de
+            PunchArea2D</figcaption>
+            </figure>
+            <p>Ens haurà creat la funció
+            <code>_on_punch_area_2d_body_entered</code> en l’script del
+            <em>collider</em>. L’únic que hem de fer és cridar a la
+            funció <code>destroy()</code> de la taronja quan detecte que
+            ha col·lisionat amb un objecte del grup
+            <strong>Orange</strong>:</p>
+            <div class="sourceCode" id="cb12"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="va">func</span> _on_punch_area_2d_body_entered<span class="op">(</span><span class="va">body</span><span class="op">:</span> <span class="cn">N</span><span class="va">ode2D</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">void</span><span class="op">:</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="va">body</span><span class="op">.</span>is_in_group<span class="op">(</span><span class="st">&quot;Orange&quot;</span><span class="op">):</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">body</span><span class="op">.</span>destroy<span class="op">()</span></span></code></pre></div>
+            <p>Ara el nostre personatge ja hauria de poder destruir les
+            taronges amb colps de puny.</p>
+            <h2 data-number="1.4" id="exercicis"><span
+            class="header-section-number">1.4</span> Exercicis</h2>
+            <ol type="1">
+            <li>Ajusta els valors de velocitat de la taronja, així com
+            les coordenades <strong>x</strong> i <strong>y</strong> de
+            respawn.</li>
+            <li>Fes 2 animacions per a quan el personatge reba un colp,
+            <em>high_damage</em> (en peu) i <em>crouch_damage</em>
+            (ajupit). Executa les animacions quan la taronja col·lisione
+            amb el personatge, dins de *_on_area_2d_body_entered*.</li>
+            <li>Fes l’activació del <em>collider</em> per a l’animació
+            <em>punch_crouch</em>.</li>
+            <li>Crea una variable global anomenada <em>score</em> que
+            s’incremente cada vegada que el jugador colpeja una taronja
+            amb el puny.</li>
+            </ol>
+        </main>
+        
+
+        <!--- Modal images -->
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+            <!-- The Close Button -->
+            <!--span class="close">&times;</span-->
+
+            <!-- Modal Content (The Image) -->
+            <img class="modal-content" id="img01">
+
+            <!-- Modal Caption (Image Text) -->
+            <div id="caption"></div>
+        </div>
+
+        <!-- End Modal Images -->
+
+        <!-- Snackbar for copy code -->
+        <div id="snackbar">Codi copiat!</div>
+        <!-- End Snackbar -->
+
+        <script>
+            function ModalizeImages() {
+                // Script basat en https://www.w3schools.com/howto/howto_css_modal_images.asp
+                // PEr ampliar imatges en fer click
+
+                // Get the modal
+                var modal = document.getElementById("myModal");
+
+                var modalImg = document.getElementById("img01");
+                var captionText = document.getElementById("caption");
+
+                // Get the image and insert it inside the modal - use its "alt" text as a caption
+                //var img = document.getElementById("myImg");
+                document.querySelectorAll("img").forEach((img => {
+                        img.onclick = function() {
+                            modal.style.display = "block";
+                            modalImg.src = this.src;
+                            captionText.innerHTML = this.alt;
+                        }
+                    }))
+                    // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close")[0];
+
+                // When the user clicks on <span> (x), close the modal
+                //span.onclick = function() {
+                myModal.onclick = function() {
+                    modal.style.display = "none";
+                }
+
+
+            }
+
+
+            function markItem(id) {
+                // Restaurem format de tots
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                        //item.style.fontWeight = "300";
+                        item.classList.remove("navItemSelected");
+                    })
+                    //item.style.color = "#ff0000";
+
+                // Afegim format
+                let items = document.querySelectorAll("#TOC a[href='#" + id + "']");
+                items.forEach(function(item) {
+                    //item.style.fontWeight = "bolder";
+                    item.classList.add("navItemSelected");
+                })
+
+            }
+
+            var observer = new IntersectionObserver(function(entries) {
+                // isIntersecting is true when element and viewport are overlapping
+                // isIntersecting is false when element and viewport don't overlap
+                if (entries[0].isIntersecting === true) {
+                    let id = entries[0].target.id;
+                    markItem(id);
+                }
+
+            }, {
+                threshold: [0]
+            });
+
+            window.addEventListener("load", function() {
+                document.querySelectorAll("h1, h2, h3").forEach(function(item) {
+                    observer.observe(item);
+                });
+
+                document.querySelectorAll("#TOC a").forEach(function(item) {
+                    item.addEventListener("click", function(item) {
+                        markItem(item.id);
+                    })
+                })
+
+                // Fem modals totes les imatges
+                ModalizeImages();
+            })
+
+            document.querySelector("#TOC").addEventListener("click", function(event) {
+                let toc = event.target
+                if (toc.offsetWidth > 10) {
+                    toc.classList.add("minimizedToc");
+                }
+            })
+
+            document.querySelector("#TOC").addEventListener("mouseover", function(event) {
+                let toc = event.target
+                if (toc.classList.contains("minimizedToc"))
+                    toc.classList.remove("minimizedToc");
+            })
+
+
+                        
+            /* PER COPIAR CODI */
+
+
+            // Busca tots els elements amb la classe "sourceCode"
+            var sourceCodeElements = document.querySelectorAll('div.sourceCode');
+
+            /*Afegim el botó a tots els divs */
+            // Afegir un botó per a cada element "sourceCode"
+            sourceCodeElements.forEach(function(element) {
+                console.log(element.id);
+                var button = document.createElement('div');
+                button.className = 'button-copy';
+
+                // Afegir una icona al botó (fa servir FontAwesome com a exemple)
+                //var icon = document.createElement('i');
+                //icon.className = 'fas fa-copy'; // Utilitza l'ícona "copy" de FontAwesome
+
+                // Obté l'ID de l'element actual
+                var elementId = element.id;
+
+                // Afegeix un event listener al botó per cridar la funció amb l'ID
+                button.addEventListener('click', function() {
+                    copyContent(elementId);
+                });
+
+                // Afegeix l'icona al botó i el botó just dins de l'element "sourceCode"
+                //button.appendChild(icon);
+                element.appendChild(button);
+            });
+
+
+
+            // Funció per copiar el contingut d'un element amb l'ID donat
+            function copyContent(elementId) {
+                var element = document.getElementById(elementId);
+                var textToCopy = element.innerText;
+
+                // Crea un element de text i copia el contingut
+                var textArea = document.createElement('textarea');
+                textArea.value = textToCopy;
+                document.body.appendChild(textArea);
+
+                // Selecciona i copia el text
+                textArea.select();
+                document.execCommand('copy');
+
+                // Elimina l'element de text afegit temporalment
+                document.body.removeChild(textArea);
+
+                // Notifica a l'usuari que el codi s'ha copiat
+                mostraSnackbar();
+            }
+
+            /* SNACKBAR EN COPIAR CODI */
+
+            function mostraSnackbar() {
+            // Busquem l'snackbar
+            var x = document.getElementById("snackbar");
+
+            // Li afegim la classe show
+            x.className = "show";
+
+            // I als tres segons la llevem
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+            } 
+
+
+
+
+        </script>
+    </div>
+</body>
+
+</html>
