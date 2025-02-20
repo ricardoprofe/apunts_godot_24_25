@@ -62,8 +62,10 @@ Amb això estem assignant a la variable `remainingTime` el valor inicial de `ini
 
 El cos de la funció `_process` el deixem així:
 
+```lua
 func _process(delta: float) -> void:
 	timerLabel.text = str(remainingTime)
+```
 
 és a dir, fiquem en el text de l'etiqueta el valor de `remainingTime`. Això mostrarà el temps restant.
 
