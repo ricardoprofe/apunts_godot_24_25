@@ -22,8 +22,9 @@
         }
         .display.math{display: block; text-align: center; margin: 0.5rem auto;}
         /* CSS for syntax highlighting */
+        html { -webkit-text-size-adjust: 100%; }
         pre > code.sourceCode { white-space: pre; position: relative; }
-        pre > code.sourceCode > span { line-height: 1.25; }
+        pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
         pre > code.sourceCode > span:empty { height: 1.2em; }
         .sourceCode { overflow: visible; }
         code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -131,7 +132,14 @@ id="toc-operadors-condicionals"><span
 class="toc-section-number">1.7.1</span> Operadors condicionals</a></li>
 <li><a href="#ifelse" id="toc-ifelse"><span
 class="toc-section-number">1.7.2</span> if/else</a></li>
+<li><a href="#bucles-while" id="toc-bucles-while"><span
+class="toc-section-number">1.7.3</span> Bucles
+<code>while</code></a></li>
+<li><a href="#bucles-for" id="toc-bucles-for"><span
+class="toc-section-number">1.7.4</span> Bucles <code>for</code></a></li>
 </ul></li>
+<li><a href="#arrays" id="toc-arrays"><span
+class="toc-section-number">1.8</span> Arrays</a></li>
 </ul></li>
 </ul>
             </div>
@@ -158,7 +166,7 @@ class="toc-section-number">1.7.2</span> if/else</a></li>
             href="https://docs.godotengine.org/es/4.x/getting_started/step_by_step/scripting_first_script.html">Creating
             your first script</a> de la documentació de Godot.</p>
             <div class="sourceCode" id="cb1"><pre
-            class="sourceCode lua"><code class="sourceCode lua"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">extends</span> <span class="cn">S</span><span class="va">prite2D</span></span>
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">extends</span> <span class="va">Sprite2D</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="va">var</span> <span class="va">speed</span> <span class="op">=</span> <span class="dv">400</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="va">var</span> <span class="va">angular_speed</span> <span class="op">=</span> <span class="cn">PI</span></span>
@@ -167,7 +175,7 @@ class="toc-section-number">1.7.2</span> if/else</a></li>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="va">func</span> _process<span class="op">(</span><span class="va">delta</span><span class="op">):</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="va">rotation</span> <span class="er">+=</span> <span class="va">angular_speed</span> <span class="op">*</span> <span class="va">delta</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="va">var</span> <span class="va">velocity</span> <span class="op">=</span> <span class="cn">V</span><span class="va">ector2</span><span class="op">.</span><span class="cn">UP</span><span class="op">.</span>rotated<span class="op">(</span><span class="va">rotation</span><span class="op">)</span> <span class="op">*</span> <span class="va">speed</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="va">var</span> <span class="va">velocity</span> <span class="op">=</span> <span class="va">Vector2</span><span class="op">.</span><span class="cn">UP</span><span class="op">.</span>rotated<span class="op">(</span><span class="va">rotation</span><span class="op">)</span> <span class="op">*</span> <span class="va">speed</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="va">position</span> <span class="er">+=</span> <span class="va">velocity</span> <span class="op">*</span> <span class="va">delta</span></span></code></pre></div>
             <p>Aquest script està associat a un node
@@ -192,7 +200,7 @@ class="toc-section-number">1.7.2</span> if/else</a></li>
             <div class="sourceCode" id="cb2"><pre
             class="sourceCode lua"><code class="sourceCode lua"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>    <span class="va">rotation</span> <span class="er">+=</span> <span class="va">angular_speed</span> <span class="op">*</span> <span class="va">delta</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">var</span> <span class="va">velocity</span> <span class="op">=</span> <span class="cn">V</span><span class="va">ector2</span><span class="op">.</span><span class="cn">UP</span><span class="op">.</span>rotated<span class="op">(</span><span class="va">rotation</span><span class="op">)</span> <span class="op">*</span> <span class="va">speed</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">var</span> <span class="va">velocity</span> <span class="op">=</span> <span class="va">Vector2</span><span class="op">.</span><span class="cn">UP</span><span class="op">.</span>rotated<span class="op">(</span><span class="va">rotation</span><span class="op">)</span> <span class="op">*</span> <span class="va">speed</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">position</span> <span class="er">+=</span> <span class="va">velocity</span> <span class="op">*</span> <span class="va">delta</span></span></code></pre></div>
             <p><code>_process</code> és una funció ja definida en el
@@ -216,7 +224,7 @@ class="toc-section-number">1.7.2</span> if/else</a></li>
             <p>Qualsevol cosa des d’un <code>#</code> fins al final de
             la línia s’ignora i es considera un comentari.</p>
             <div class="sourceCode" id="cb3"><pre
-            class="sourceCode lua"><code class="sourceCode lua"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">#</span> <span class="cn">A</span><span class="va">ix</span>ò é<span class="va">s</span> <span class="va">un</span> <span class="va">comentari</span> d<span class="st">&#39;una línia</span></span></code></pre></div>
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">#</span> <span class="va">Aix</span>ò é<span class="va">s</span> <span class="va">un</span> <span class="va">comentari</span> d<span class="st">&#39;una línia</span></span></code></pre></div>
             <p>Els comentaris de vàries línies es poden crear utilitzant
             <code>"""</code> (tres cometes seguides) al principi i al
             final d’un bloc de text. Tingueu en compte que això crea una
@@ -251,7 +259,7 @@ class="toc-section-number">1.7.2</span> if/else</a></li>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="va">life</span> <span class="op">=</span> <span class="dv">50</span> <span class="op">#</span> <span class="va">life</span> <span class="va">t</span>é <span class="va">el</span> <span class="va">valor</span> <span class="dv">50</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="va">var</span> <span class="va">damage</span> <span class="op">=</span> <span class="dv">10</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="va">life</span> <span class="op">=</span> <span class="va">life</span> <span class="op">-</span> <span class="va">damage</span> <span class="op">#</span> <span class="cn">A</span><span class="va">ra</span> <span class="va">life</span> <span class="va">t</span>é <span class="va">el</span> <span class="va">valor</span> <span class="dv">40</span> <span class="op">(</span><span class="dv">50</span> <span class="op">-</span> <span class="dv">10</span><span class="op">)</span></span></code></pre></div>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="va">life</span> <span class="op">=</span> <span class="va">life</span> <span class="op">-</span> <span class="va">damage</span> <span class="op">#</span> <span class="va">Ara</span> <span class="va">life</span> <span class="va">t</span>é <span class="va">el</span> <span class="va">valor</span> <span class="dv">40</span> <span class="op">(</span><span class="dv">50</span> <span class="op">-</span> <span class="dv">10</span><span class="op">)</span></span></code></pre></div>
             <p>Les variables tenen un tipus (<em>type</em>), que és el
             tipus de dades que emmagatzemen. Els tipus bàsics de
             GDScript són:</p>
@@ -280,8 +288,8 @@ class="toc-section-number">1.7.2</span> if/else</a></li>
             class="sourceCode lua"><code class="sourceCode lua"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="va">var</span> <span class="va">a</span> <span class="op">=</span> <span class="kw">true</span><span class="op">;</span> <span class="op">#</span> <span class="va">bool</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="va">var</span> <span class="va">b</span> <span class="op">=</span> <span class="dv">5</span><span class="op">;</span> <span class="op">#</span> <span class="va">int</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="va">var</span> <span class="va">c</span> <span class="op">=</span> <span class="dv">4.5</span> <span class="op">#</span> <span class="va">float</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="va">var</span> <span class="va">message</span> <span class="op">=</span> <span class="st">&quot;Welcome&quot;</span> <span class="op">#</span> <span class="cn">S</span><span class="va">tring</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="va">message</span> <span class="op">=</span> <span class="dv">5</span> <span class="op">#</span> <span class="cn">A</span><span class="va">ra</span> <span class="va">message</span> é<span class="va">s</span> <span class="va">int</span></span></code></pre></div>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="va">var</span> <span class="va">message</span> <span class="op">=</span> <span class="st">&quot;Welcome&quot;</span> <span class="op">#</span> <span class="va">String</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="va">message</span> <span class="op">=</span> <span class="dv">5</span> <span class="op">#</span> <span class="va">Ara</span> <span class="va">message</span> é<span class="va">s</span> <span class="va">int</span></span></code></pre></div>
             <h2 data-number="1.4" id="operadors"><span
             class="header-section-number">1.4</span> Operadors</h2>
             <p>El operadors matemàtics més freqüents són:</p>
@@ -290,7 +298,7 @@ class="toc-section-number">1.7.2</span> if/else</a></li>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="va">x</span> <span class="op">-</span> <span class="va">y</span> <span class="op">#</span> <span class="va">sustracci</span>ó</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="va">x</span> <span class="op">*</span> <span class="va">y</span> <span class="op">#</span> <span class="va">multiplicaci</span>ó</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="va">x</span> <span class="op">/</span> <span class="va">y</span> <span class="op">#</span><span class="va">divisi</span>ó</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="va">x</span> <span class="op">%</span> <span class="va">y</span> <span class="op">#</span> <span class="cn">M</span>ò<span class="va">dul</span><span class="op">,</span> <span class="va">el</span> <span class="va">resultat</span> é<span class="va">s</span> <span class="va">el</span> <span class="va">residu</span> <span class="va">de</span> <span class="va">la</span> <span class="va">divisi</span>ó <span class="va">entera</span> <span class="va">de</span> <span class="va">x</span> <span class="va">entre</span> <span class="va">y</span><span class="op">.</span> <span class="cn">E</span><span class="va">xemple</span><span class="op">:</span> <span class="dv">8</span> <span class="op">%</span> <span class="dv">3</span> <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="va">x</span> <span class="op">%</span> <span class="va">y</span> <span class="op">#</span> <span class="va">M</span>ò<span class="va">dul</span><span class="op">,</span> <span class="va">el</span> <span class="va">resultat</span> é<span class="va">s</span> <span class="va">el</span> <span class="va">residu</span> <span class="va">de</span> <span class="va">la</span> <span class="va">divisi</span>ó <span class="va">entera</span> <span class="va">de</span> <span class="va">x</span> <span class="va">entre</span> <span class="va">y</span><span class="op">.</span> <span class="va">Exemple</span><span class="op">:</span> <span class="dv">8</span> <span class="op">%</span> <span class="dv">3</span> <span class="op">=</span> <span class="dv">2</span></span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="op">-</span><span class="va">x</span> <span class="op">#</span> <span class="va">negaci</span>ó</span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="va">x</span> <span class="op">**</span> <span class="va">y</span> <span class="op">#</span> <span class="va">exponenciaci</span>ó<span class="op">,</span> <span class="va">x</span> <span class="va">elevat</span> <span class="va">a</span> <span class="va">y</span></span></code></pre></div>
             <p>L’operador d’assignació = assigna a la variable de
@@ -330,7 +338,7 @@ class="toc-section-number">1.7.2</span> if/else</a></li>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">var</span> <span class="va">message</span> <span class="op">=</span> <span class="st">&quot;Welcome&quot;</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span><span class="op">(</span><span class="va">message</span><span class="op">)</span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>welcomeMessage<span class="op">()</span> <span class="op">#</span> <span class="cn">I</span><span class="va">mprimeix</span> <span class="cn">W</span><span class="va">elcome</span></span></code></pre></div>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>welcomeMessage<span class="op">()</span> <span class="op">#</span> <span class="va">Imprimeix</span> <span class="va">Welcome</span></span></code></pre></div>
             <p>En aquest exemple el nom de la funció és
             <code>welcomeMessage</code>. Va seguit d’uns parèntesis
             entre els quals escrivim els paràmetres (en cas cas no n’hi
@@ -350,7 +358,7 @@ class="toc-section-number">1.7.2</span> if/else</a></li>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">var</span> <span class="va">message</span> <span class="op">=</span> <span class="st">&quot;Welcome&quot;</span> <span class="op">+</span> <span class="va">name</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span> <span class="va">message</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>welcomeMessage<span class="op">(</span><span class="st">&quot;Mary&quot;</span><span class="op">)</span> <span class="op">#</span> <span class="cn">I</span><span class="va">mprimeix</span> <span class="cn">W</span><span class="va">elcome</span> <span class="cn">M</span><span class="va">ary</span></span></code></pre></div>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>welcomeMessage<span class="op">(</span><span class="st">&quot;Mary&quot;</span><span class="op">)</span> <span class="op">#</span> <span class="va">Imprimeix</span> <span class="va">Welcome</span> <span class="va">Mary</span></span></code></pre></div>
             <blockquote>
             <p>En aquest exemple l’operador <code>+</code> concatena
             (uneix) les 2 cadenes de text.</p>
@@ -361,7 +369,7 @@ class="toc-section-number">1.7.2</span> if/else</a></li>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">var</span> <span class="va">result</span> <span class="op">=</span> <span class="va">a</span> <span class="op">+</span> <span class="va">b</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">result</span></span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>addition<span class="op">(</span><span class="dv">5</span><span class="op">,</span> <span class="dv">6</span><span class="op">)</span> <span class="op">#</span> <span class="cn">I</span><span class="va">mprimeix</span> <span class="dv">11</span></span></code></pre></div>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>addition<span class="op">(</span><span class="dv">5</span><span class="op">,</span> <span class="dv">6</span><span class="op">)</span> <span class="op">#</span> <span class="va">Imprimeix</span> <span class="dv">11</span></span></code></pre></div>
             <p>La paraula clau <code>result</code> en una funció retorna
             el valor especificat i termina l’execució de la funció. Si
             una funció no té cap instrucció <code>result</code>, termina
@@ -486,6 +494,85 @@ class="toc-section-number">1.7.2</span> if/else</a></li>
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">print</span><span class="op">(</span><span class="st">&quot;a és menor que b&quot;</span><span class="op">)</span></span>
 <span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span><span class="op">:</span></span>
 <span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>   <span class="fu">print</span><span class="op">(</span><span class="st">&quot;a és major o igual que b&quot;</span><span class="op">)</span></span></code></pre></div>
+            <p>Si tenim més de 2 condicions, podem valorar les que no
+            compleixen la primera afegint sentències
+            <code>elif</code>:</p>
+            <div class="sourceCode" id="cb23"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="va">var</span> <span class="va">a</span> <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="va">var</span> <span class="va">b</span> <span class="op">=</span> <span class="dv">6</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">a</span> <span class="op">&lt;</span> <span class="va">b</span><span class="op">:</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">print</span><span class="op">(</span><span class="st">&quot;a és menor que b&quot;</span><span class="op">)</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="va">elif</span> <span class="va">a</span> <span class="op">&gt;</span> <span class="va">b</span><span class="op">:</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span><span class="op">(</span><span class="st">&quot;a és menor que b&quot;</span><span class="op">)</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span><span class="op">:</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">print</span><span class="op">(</span><span class="st">&quot;a i b són iguals&quot;</span><span class="op">)</span></span></code></pre></div>
+            <h3 data-number="1.7.3" id="bucles-while"><span
+            class="header-section-number">1.7.3</span> Bucles
+            <code>while</code></h3>
+            <p>Els bucles serveixen per a executar una mateixa acció
+            mentres es complisca una condició.</p>
+            <p>El bucle més simple és el <code>while</code>:</p>
+            <div class="sourceCode" id="cb24"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="op">(</span><span class="va">condicio</span><span class="op">):</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">instruccions</span></span></code></pre></div>
+            <p>Per exemple:</p>
+            <div class="sourceCode" id="cb25"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="va">var</span> <span class="va">n</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> <span class="op">#</span><span class="va">Iniciem</span> <span class="va">la</span> <span class="va">variable</span> <span class="va">comptador</span> <span class="va">n</span> <span class="va">a</span> <span class="dv">0</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="op">#</span><span class="va">Aquest</span> <span class="va">bucle</span> <span class="va">imprimeix</span> <span class="va">el</span> <span class="va">n</span>ú<span class="va">meros</span> <span class="va">de</span> <span class="dv">0</span> <span class="va">a</span> <span class="dv">9</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="op">(</span><span class="va">n</span> <span class="op">&lt;</span> <span class="dv">10</span><span class="op">):</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="va">n</span> <span class="er">+=</span> <span class="dv">1</span></span></code></pre></div>
+            <h3 data-number="1.7.4" id="bucles-for"><span
+            class="header-section-number">1.7.4</span> Bucles
+            <code>for</code></h3>
+            <p>Els bucles for s’utilitzen principalment per a recorrer
+            un array:</p>
+            <div class="sourceCode" id="cb26"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="va">var</span> <span class="va">names</span> <span class="op">=</span> <span class="op">[</span><span class="st">&quot;John&quot;</span><span class="op">,</span> <span class="st">&quot;Marta&quot;</span><span class="op">,</span> <span class="st">&quot;Samantha&quot;</span><span class="op">,</span> <span class="st">&quot;Jimmy&quot;</span><span class="op">]</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="va">name</span> <span class="kw">in</span> <span class="va">names</span><span class="op">:</span> </span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span><span class="op">(</span><span class="va">name</span><span class="op">)</span> <span class="op">#</span> <span class="va">Imprimeix</span> <span class="va">tots</span> <span class="va">els</span> <span class="va">noms</span> <span class="va">de</span> l<span class="st">&#39;array</span></span></code></pre></div>
+            <p>En l’exemple anterior tenim un array anomenat
+            <em>names</em> el qual recorreguem amb
+            <code>for name in names</code>; la variable <em>name</em>
+            pren el valor de cada element de l’array <em>names</em>.</p>
+            <h2 data-number="1.8" id="arrays"><span
+            class="header-section-number">1.8</span> Arrays</h2>
+            <p>Els <strong><code>arrays</code></strong> (també coneguts
+            com <em>arranjaments</em> o <em>matrius</em>) són seqüències
+            de variables o objectes.</p>
+            <p>Podem crea un array buit o amb elements:</p>
+            <div class="sourceCode" id="cb27"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="va">var</span> <span class="va">numbers</span> <span class="op">=</span> <span class="op">[]</span> <span class="op">#</span> <span class="va">Array</span> <span class="va">sense</span> <span class="va">elements</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="va">var</span> <span class="va">fruits</span> <span class="op">=</span> <span class="op">[</span><span class="st">&#39;apple&#39;</span><span class="op">,</span> <span class="st">&#39;orange&#39;</span><span class="op">,</span> <span class="st">&#39;banana&#39;</span><span class="op">]</span> <span class="op">#</span> <span class="va">Array</span> <span class="va">amb</span> <span class="dv">3</span> <span class="va">elements</span></span></code></pre></div>
+            <p>Podem llegir el valor d’un element amb el seu index. El
+            primer element té l’índex 0:</p>
+            <div class="sourceCode" id="cb28"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="va">var</span> <span class="va">fruits</span> <span class="op">=</span> <span class="op">[</span><span class="st">&#39;apple&#39;</span><span class="op">,</span> <span class="st">&#39;orange&#39;</span><span class="op">,</span> <span class="st">&#39;banana&#39;</span><span class="op">]</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span><span class="op">(</span><span class="va">fruits</span><span class="op">[</span><span class="dv">0</span><span class="op">])</span> <span class="op">#</span><span class="va">Imprimeix</span> <span class="va">apple</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span><span class="op">(</span><span class="va">fruits</span><span class="op">[</span><span class="dv">2</span><span class="op">])</span> <span class="op">#</span><span class="va">Imprimeix</span> <span class="va">banana</span></span></code></pre></div>
+            <p>Amb el mètode <code>.size()</code> obtenim el nombre
+            d’elements d’un array:</p>
+            <div class="sourceCode" id="cb29"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="va">var</span> <span class="va">fruits</span> <span class="op">=</span> <span class="op">[</span><span class="st">&#39;apple&#39;</span><span class="op">,</span> <span class="st">&#39;orange&#39;</span><span class="op">,</span> <span class="st">&#39;banana&#39;</span><span class="op">]</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span><span class="op">(</span><span class="va">fruits</span><span class="op">.</span>size<span class="op">())</span> <span class="op">#</span><span class="va">Imprimeix</span> <span class="dv">3</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span><span class="op">(</span><span class="va">fruits</span><span class="op">[</span><span class="va">fruits</span><span class="op">.</span>size<span class="op">()</span> <span class="op">-</span> <span class="dv">1</span><span class="op">])</span> <span class="op">#</span><span class="va">Imprimeix</span> l<span class="st">&#39;últim element</span></span></code></pre></div>
+            <p>Podem utilitzar el valor de <code>size</code> per a
+            recòrrer l’array:</p>
+            <div class="sourceCode" id="cb30"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="va">var</span> <span class="va">fruits</span> <span class="op">=</span> <span class="op">[</span><span class="st">&#39;apple&#39;</span><span class="op">,</span> <span class="st">&#39;orange&#39;</span><span class="op">,</span> <span class="st">&#39;banana&#39;</span><span class="op">]</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="va">i</span> <span class="kw">in</span> range<span class="op">(</span><span class="va">fruits</span><span class="op">.</span>size<span class="op">()):</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span><span class="op">(</span><span class="va">fruits</span><span class="op">.[</span><span class="va">i</span><span class="op">])</span> <span class="op">#</span> <span class="va">Imprimeix</span> <span class="va">totes</span> <span class="va">les</span> <span class="va">fruites</span></span></code></pre></div>
+            <p>Els arrays podem créixer automàticament cada vegada que
+            afegim un element. Això ho podem fer amb la funció
+            <code>append</code>:</p>
+            <div class="sourceCode" id="cb31"><pre
+            class="sourceCode lua"><code class="sourceCode lua"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="va">var</span> <span class="va">fruits</span> <span class="op">=</span> <span class="op">[</span><span class="st">&#39;apple&#39;</span><span class="op">,</span> <span class="st">&#39;orange&#39;</span><span class="op">,</span> <span class="st">&#39;banana&#39;</span><span class="op">]</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="va">fruits</span><span class="op">.</span>append<span class="op">(</span><span class="st">&#39;tomato&#39;</span><span class="op">)</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span><span class="op">(</span><span class="va">fruits</span><span class="op">.</span>size<span class="op">())</span> <span class="op">#</span><span class="va">Imprimeix</span> <span class="dv">4</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span><span class="op">(</span><span class="va">fruits</span><span class="op">[</span><span class="va">fruits</span><span class="op">.</span>size<span class="op">()</span> <span class="op">-</span> <span class="dv">1</span><span class="op">])</span> <span class="op">#</span><span class="va">Imprimeix</span> <span class="va">tomato</span></span></code></pre></div>
         </main>
         
 

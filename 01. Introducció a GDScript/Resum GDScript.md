@@ -316,3 +316,96 @@ if a < b:
 else:
    print("a és major o igual que b")
 ```
+
+Si tenim més de 2 condicions, podem valorar les que no compleixen la primera afegint sentències `elif`:
+
+```lua
+var a = 5
+var b = 6
+
+if a < b:
+   print("a és menor que b")
+elif a > b:
+	print("a és menor que b")
+else:
+   print("a i b són iguals")
+```
+
+### Bucles `while`
+
+Els bucles serveixen per a executar una mateixa acció mentres es complisca una condició.
+
+El bucle més simple és el `while`:
+
+```lua
+while (condicio):
+	instruccions
+```
+
+Per exemple:
+
+```lua
+var n = 0; #Iniciem la variable comptador n a 0
+
+#Aquest bucle imprimeix el números de 0 a 9
+while (n < 10):
+	print(n)
+	n += 1
+```
+
+### Bucles `for`
+
+Els bucles for s'utilitzen principalment per a recorrer un array:
+
+```lua
+var names = ["John", "Marta", "Samantha", "Jimmy"]
+
+for name in names: 
+	print(name) # Imprimeix tots els noms de l'array
+```
+
+En l'exemple anterior tenim un array anomenat *names* el qual recorreguem amb `for name in names`; la variable *name* pren el valor de cada element de l'array *names*.
+
+## Arrays
+
+Els **`arrays`** (també coneguts com *arranjaments* o *matrius*) són seqüències de variables o objectes. 
+
+Podem crea un array buit o amb elements:
+
+```lua
+var numbers = [] # Array sense elements
+var fruits = ['apple', 'orange', 'banana'] # Array amb 3 elements
+```
+
+Podem llegir el valor d'un element amb el seu index. El primer element té l'índex 0:
+
+```lua
+var fruits = ['apple', 'orange', 'banana']
+print(fruits[0]) #Imprimeix apple
+print(fruits[2]) #Imprimeix banana
+```
+
+Amb el mètode `.size()` obtenim el nombre d'elements d'un array:
+
+```lua
+var fruits = ['apple', 'orange', 'banana']
+print(fruits.size()) #Imprimeix 3
+print(fruits[fruits.size() - 1]) #Imprimeix l'últim element
+```
+
+Podem utilitzar el valor de `size` per a recòrrer l'array:
+
+```lua
+var fruits = ['apple', 'orange', 'banana']
+for i in range(fruits.size()):
+	print(fruits.[i]) # Imprimeix totes les fruites
+```
+
+Els arrays podem créixer automàticament cada vegada que afegim un element. Això ho podem fer amb la funció `append`:
+
+```lua
+var fruits = ['apple', 'orange', 'banana']
+fruits.append('tomato')
+print(fruits.size()) #Imprimeix 4
+print(fruits[fruits.size() - 1]) #Imprimeix tomato
+```
